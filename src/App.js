@@ -1,4 +1,5 @@
 import logo from "./logo.svg"
+import useEffect from "./useEffect"
 //importla useeffecti
 function App() {
   useEffect(() => {
