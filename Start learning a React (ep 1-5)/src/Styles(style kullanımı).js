@@ -1,6 +1,6 @@
 import logo from "./logo.svg"
 import styles from './App.module.css'//! import styles from './App.module.css (böyle olunca object oluyor css) ama aynı klasördeki style.css de adını App.modu.css yapmalı
-import Test from "./Test"
+//import Test from "./Test"
 import { Title } from "./Component"
 import Bootstrap from "./Bootstrap"
 import Tailwind from "./Tailwind"
@@ -16,7 +16,7 @@ function Styles (){
           {process.env.REACT_APP_API_URL}
           <span>Test</span>
         </p>
-        <Test />
+       {/*  <Test /> */}
       {process.env.NODE_ENV === 'proudction' &&(
         <>
         <img src="/logo192.png" alt="" />
