@@ -1,7 +1,7 @@
 import logo from "./logo.svg"
 import styles from './App.module.css'//! import styles from './App.module.css (böyle olunca object oluyor css) ama aynı klasördeki style.css de adını App.modu.css yapmalı
 import Test from "./Test"
-import { Title } from "./Components"
+import { Title } from "./Component"
 import Bootstrap from "./Bootstrap"
 import Tailwind from "./Tailwind"
 import "./style.scss"
