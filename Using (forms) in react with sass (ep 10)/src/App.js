@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "./app.sass"
 
 function App() {
   const genders = [
@@ -16,7 +17,7 @@ function App() {
     {key:'jr_developer', value:'Jr. Developer'},
     {key:'sr_developer', value:'Sr. Developer'},
   ]
-  const [name, setName] = useState('Muhammed');
+  const [name, setName] = useState('Muhammed Taha');
   const [description, setDescription] = useState('');
   const [gender, setGender] = useState('');
   const [categories, setCategories] = useState([2, 4]);
@@ -25,10 +26,20 @@ function App() {
     {key:1, value:'1.kuralı kabul ediyorum', checked: false},
     {key:2, value:'2.kuralı kabul ediyorum', checked: false},
     {key:3, value:'3.kuralı kabul ediyorum', checked: true},
-
   ])
-      
       const [level,setLevel] = useState('jr_developer')
+      const [avatar, setAvatar] = useState(false)
+      const [image , setImage] = useState(false)
+
+      useEffect(() =>{
+        if(avatar){
+          const fileReader = new FileReader()
+        fileReader.addEventListener('load', function () {
+           setImage(this.result)
+        })
+        fileReader.readAsDataURL(avatar)
+        }
+      }, [avatar])
 
       const checkRule = (key, checked) => {
         setRules(rules => rules.map(rule => {
@@ -39,13 +50,32 @@ function App() {
         }))
       }
 
+      const submitHandle = () => {
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+        formData.append('name', name);
+        
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => {
+          if (!response.ok) throw new Error("Network response was not ok");
+          return response.json();
+        })
+        .then(data => console.log("Success:", data))
+        .catch(error => console.error("Fetch error:", error));
+      };
+      
+
   const selectedGender = genders.find(g => g.key === Number(gender));
+  const selectedLevel = levels.find(g => g.key === level);
   const selectedCategories = categories && categoryList.filter(c => categories.includes(c.key));
-  const  enabled = rules.every(rule => rule.checked)
+  const  enabled = rules.every(rule => rule.checked) && avatar
 
   return (
     <>
-      <button onClick={() => setName('Taha')}>Adı değiştir</button>
+      <button onClick={() => setName('Your Name!')}>Adı değiştir</button>
       <input type="text" value={name} onChange={e => setName(e.target.value)} /> <br />
 
       <textarea value={description} onChange={e => setDescription(e.target.value)} /> <br />
@@ -64,7 +94,9 @@ function App() {
         ))}
       </select><br />
 
+      <pre>{JSON.stringify(selectedGender, null, 2)}</pre>
       <pre>{JSON.stringify(selectedCategories, null, 2)}</pre>
+
 
       <br />
 
@@ -89,13 +121,34 @@ function App() {
           {levels.map((l, index)=> (
             <label key={index}>
               <input type="radio" value={l.key} checked={l.key === level} onChange={e => setLevel(e.target.value)}/>
-              {l.value}
+              {l.value} 
             </label>
           ))}
  <br />
-            {level}
-        <button disabled={!enabled}>Devam et</button>
-          
+
+        
+        <br />
+        <pre>{JSON.stringify(selectedLevel, null, 2)}</pre><br />
+
+        <div className="avatar-upload">
+        <label htmlFor="file-upload" className="button">&#8675; Dosya Yükle</label>
+        <input
+          id="file-upload"
+          type="file"
+          onChange={e => setAvatar(e.target.files[0])}
+          />
+          </div>
+        <br />
+
+        {avatar && (
+          <>
+          <h3>{avatar.name}</h3>
+          {image && <img src={image} alt=""/>}
+          </>
+        )}
+        <br />
+        <button onClick={submitHandle} disabled={!enabled}>Devam et</button>
+
     </>
   );
 }
