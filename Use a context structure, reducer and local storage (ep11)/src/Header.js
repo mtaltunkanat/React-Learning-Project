@@ -1,19 +1,26 @@
 import SwitchLanguage from "./SwitchLanguage";
 import SwitchTheme from "./SwitchTheme";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./context";
 export default function Header() {
 
-const { user, setUser } = useAuth()
+const { user, dispatch } = useAuth()
 
 const login = () =>{
-  setUser({
-    name: 'muhammed',
-    id:1
+  //kullanıcı adı ve şifreyi apiye iletiyorum
+  // cevap dönüyor
+  dispatch({
+    type: 'LOGIN',
+    payload: {
+      name: 'muhammed',
+      id: 1
+    }
   })
 }
 
 const logout = () => {
-  setUser(false);
+  dispatch({
+    type: 'LOGOUT'
+  })
 }
 
   return (

@@ -1,6 +1,7 @@
-import SiteProvider from "./context/SiteContext"
-import AuthProvider from "./context/AuthContext"
+import { SiteProvider, AuthContext, AuthProvider} from "./context"
 import Home from "./Home";
+import './styles.css';
+
 
 function App() { 
 
