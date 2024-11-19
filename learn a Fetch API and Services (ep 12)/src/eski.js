@@ -85,3 +85,21 @@ function Eski() {
 
 export default Eski;
  */
+
+
+/* useEffect(() => {
+    PostService.getPosts().then(res => console.log(res))
+    PostService.getPostDetail(2).then(res => console.log(res))
+    PostService.newPost({
+      userId: 3,
+      title: 'test',
+      body: 'test'
+    }).then(res => console.log(res))
+    UserService.getUsers()
+  })
+  serviceler 12.bölümden
+  
+  import { PostService, UserService } from "./services"
+import { useEffect } from "react";
+import {getPosts} from "./services/post"
+  */
